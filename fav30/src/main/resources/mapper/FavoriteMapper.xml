@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 映射文件的命名空间namespace的值是，与之对应的映射接口的全类名 -->
+<mapper namespace="com.yc.fav.mapper.FavoriteMapper">
+
+	<select id="findFavs" resultType="Favorite" parameterType="string">
+	<!-- 使用_parameter 取单个基本类型或String的值 -->
+		select * from favorite 
+		<choose>
+			<when test="_parameter == '-0'"></when>
+			<when test="_parameter == '-1'">
+				where ftags is null
+			</when>
+			<otherwise>
+				where ftags like '%,${_parameter},%' or ftags like '%,${_parameter}' or ftags like '${_parameter},%' or ftags like '${_parameter}'
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insertFav" parameterType="Favorite">
+		insert into favorite values(seq_favorite.nextval,#{flabel},#{furl},#{ftags},#{fdesc})
+	</insert>
+</mapper>

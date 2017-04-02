@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 映射文件的命名空间namespace的值是，与之对应的映射接口的全类名 -->
+<mapper namespace="com.yc.fav.mapper.TagMapper">
+
+	<select id="findAllTags" resultType="Tag">
+		select * from tag
+	</select>
+	<select id="findTagByTagName" parameterType="string" resultType="boolean">
+		select 1 from tag where tname=#{tname}
+	</select>
+	<insert id="insertTag" parameterType="string">
+		insert into tag values(seq_tag.nextval,#{tname},1)
+	</insert>
+	<update id="updateTagCount" parameterType="string">
+	    update tag set tcount = tcount + 1 where tname =#{tname}
+	</update>
+</mapper>
